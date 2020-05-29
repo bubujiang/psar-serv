@@ -24,8 +24,8 @@ func (f *FileConf)Get() *Config {
 
 	pc := &Config{}
 	pc.Ip = cfg.Section("server").Key("ip").String()
-	port,_ := cfg.Section("server").Key("port").Uint64()
-	pc.Port = uint32(port)
+	//port,_ := cfg.Section("server").Key("port").Uint64()
+	pc.Port,_ = cfg.Section("server").Key("port").Uint64()
 
 	return pc
 }

@@ -2,7 +2,7 @@ package conf
 
 type Config struct {
 	Ip string
-	Port uint32
+	Port uint64
 }
 
 type Op interface {

@@ -1,16 +1,15 @@
 package main
 
 import (
-	"fmt"
-	"os"
-	"os/signal"
+	"github.com/gin-gonic/gin"
 	"psar/serv/conf"
-	"syscall"
+	"strconv"
 )
+
 
 type server struct {
 	Ip string
-	Port uint32
+	Port uint64
 }
 
 func (s *server)run(c *conf.Config)  {
@@ -20,8 +19,13 @@ func (s *server)run(c *conf.Config)  {
 }
 
 func (s *server) _start() {
-	//启动服务
-	//监控信号
+	r := gin.Default()
+	r.Static("/dist", "html/dist")
+	r.Static("/plugins", "html/plugins")
+	r.GET("/", Index)
+	r.GET("/gdata",GData)
+	r.GET("/pdata",PData)
+	r.Run(s.Ip+":"+strconv.FormatUint(s.Port,10))
 }
 
 func (s *server) stop() {
