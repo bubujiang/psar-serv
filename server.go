@@ -15,12 +15,14 @@ type server struct {
 	Ip string
 	Port uint64
 	wserv *http.Server
+	Hosts map[string]string
 }
 
 func (s *server)run(c *conf.Config)  {
 	s.Ip = c.Ip
 	s.Port = c.Port
-	s.wserv = &http.Server{}
+	s.Hosts = c.Hosts
+	//s.wserv = &http.Server{}
 	s._start()
 }
 
@@ -28,22 +30,30 @@ func (s *server) _start() {
 	r := gin.Default()
 	r.Static("/dist", "html/dist")
 	r.Static("/plugins", "html/plugins")
-	r.GET("/", Index)
+	//r.LoadHTMLGlob("html/*")
+	r.LoadHTMLFiles("html/index.html")
+	r.GET("/", func(c *gin.Context) {
+		Index(c,s.Hosts)
+	})
 
-	s.wserv.Addr = s.Ip+":"+strconv.FormatUint(s.Port,10)
-	s.wserv.Handler = r
-	//s.wserv = &http.Server{
-	//	Addr:    s.Ip+":"+strconv.FormatUint(s.Port,10),
-	//	Handler: r,
-	//}
+	//s.wserv.Addr = s.Ip+":"+strconv.FormatUint(s.Port,10)
+	//s.wserv.Handler = r
+	s.wserv = &http.Server{
+		Addr:    s.Ip+":"+strconv.FormatUint(s.Port,10),
+		Handler: r,
+	}
+
+	if err := s.wserv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
+		log.Fatalf("listen: %s\n", err)
+	}
 
 	// Initializing the server in a goroutine so that
 	// it won't block the graceful shutdown handling below
-	go func() {
-		if err := s.wserv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
-			log.Fatalf("listen: %s\n", err)
-		}
-	}()
+	//go func() {
+	//	if err := s.wserv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
+	//		log.Fatalf("listen: %s\n", err)
+	//	}
+	//}()
 
 	//r.GET("/gdata",GData)
 	//r.GET("/pdata",PData)

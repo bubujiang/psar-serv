@@ -15,7 +15,7 @@ func (f *FileConf)Get() *Config {
 	path := flag.String("c","conf.ini","配置文件")
 	flag.Parse()
 
-	cfg, err := ini.Load(path)
+	cfg, err := ini.Load(*path)
 	if err != nil {
 		//todo 错误处理
 		fmt.Printf("Fail to read file: %v", err)
@@ -23,8 +23,9 @@ func (f *FileConf)Get() *Config {
 	}
 
 	pc := &Config{}
+	//cfg.Section("").KeysHash()
 	pc.Ip = cfg.Section("server").Key("ip").String()
-	//port,_ := cfg.Section("server").Key("port").Uint64()
+	pc.Hosts = cfg.Section("host").KeysHash()
 	pc.Port,_ = cfg.Section("server").Key("port").Uint64()
 
 	return pc

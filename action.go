@@ -5,9 +5,13 @@ import (
 	"net/http"
 )
 
-func Index (con *gin.Context) {
+func Index (con *gin.Context, hosts map[string]string) {
+	k:=""
+	for k = range hosts{ break }
+
 	showData := gin.H{
-		//"moduleTags": mconfig.Cnf.Log.ModulesTags,
+		"hosts": hosts,
+		"host": con.DefaultQuery("h",k),
 	}
 
 	con.HTML(http.StatusOK, "index.html", showData)
