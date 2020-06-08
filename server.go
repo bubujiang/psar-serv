@@ -43,17 +43,17 @@ func (s *server) _start() {
 		Handler: r,
 	}
 
-	if err := s.wserv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
-		log.Fatalf("listen: %s\n", err)
-	}
+	//if err := s.wserv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
+	//	log.Fatalf("listen: %s\n", err)
+	//}
 
 	// Initializing the server in a goroutine so that
 	// it won't block the graceful shutdown handling below
-	//go func() {
-	//	if err := s.wserv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
-	//		log.Fatalf("listen: %s\n", err)
-	//	}
-	//}()
+	go func() {
+		if err := s.wserv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
+			log.Fatalf("listen: %s\n", err)
+		}
+	}()
 
 	//r.GET("/gdata",GData)
 	//r.GET("/pdata",PData)
