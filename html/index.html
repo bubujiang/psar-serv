@@ -242,16 +242,63 @@
               <div class="card-body">
                 <div class="tab-content" id="custom-tabs-two-tabContent">
                   <div class="tab-pane fade show active" id="custom-tabs-two-home" role="tabpanel" aria-labelledby="custom-tabs-two-home-tab">
-                    <div id="interactive2" style="height: 300px;"></div>
+                    <div id="memfree_plot" style="height: 300px;"></div>
                   </div>
                   <div class="tab-pane fade" id="custom-tabs-two-profile" role="tabpanel" aria-labelledby="custom-tabs-two-profile-tab">
-                    Mauris tincidunt mi at erat gravida, eget tristique urna bibendum. Mauris pharetra purus ut ligula tempor, et vulputate metus facilisis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Maecenas sollicitudin, nisi a luctus interdum, nisl ligula placerat mi, quis posuere purus ligula eu lectus. Donec nunc tellus, elementum sit amet ultricies at, posuere nec nunc. Nunc euismod pellentesque diam.
+                    <div id="swapfree_plot" style="height: 300px;"></div>
                   </div>
                   <div class="tab-pane fade" id="custom-tabs-two-messages" role="tabpanel" aria-labelledby="custom-tabs-two-messages-tab">
-                    Morbi turpis dolor, vulputate vitae felis non, tincidunt congue mauris. Phasellus volutpat augue id mi placerat mollis. Vivamus faucibus eu massa eget condimentum. Fusce nec hendrerit sem, ac tristique nulla. Integer vestibulum orci odio. Cras nec augue ipsum. Suspendisse ut velit condimentum, mattis urna a, malesuada nunc. Curabitur eleifend facilisis velit finibus tristique. Nam vulputate, eros non luctus efficitur, ipsum odio volutpat massa, sit amet sollicitudin est libero sed ipsum. Nulla lacinia, ex vitae gravida fermentum, lectus ipsum gravida arcu, id fermentum metus arcu vel metus. Curabitur eget sem eu risus tincidunt eleifend ac ornare magna.
+                    <div id="cached_plot" style="height: 300px;"></div>
                   </div>
                   <div class="tab-pane fade" id="custom-tabs-two-settings" role="tabpanel" aria-labelledby="custom-tabs-two-settings-tab">
-                    Pellentesque vestibulum commodo nibh nec blandit. Maecenas neque magna, iaculis tempus turpis ac, ornare sodales tellus. Mauris eget blandit dolor. Quisque tincidunt venenatis vulputate. Morbi euismod molestie tristique. Vestibulum consectetur dolor a vestibulum pharetra. Donec interdum placerat urna nec pharetra. Etiam eget dapibus orci, eget aliquet urna. Nunc at consequat diam. Nunc et felis ut nisl commodo dignissim. In hac habitasse platea dictumst. Praesent imperdiet accumsan ex sit amet facilisis.
+                    <div id="swapcached_plot" style="height: 300px;"></div>
+                  </div>
+                </div>
+              </div>
+              <!-- /.card -->
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-12">
+            <div class="card card-primary card-tabs">
+              <div class="card-header p-0 pt-1">
+                <ul class="nav nav-tabs" id="custom-tabs-two-tab" role="tablist">
+                  <li class="pt-2 px-3"><h3 class="card-title">cpu</h3></li>
+                  <li class="nav-item">
+                    <a class="nav-link active" id="custom-tabs-two-user-tab" data-toggle="pill" href="#custom-tabs-two-user" role="tab" aria-controls="custom-tabs-two-user" aria-selected="true">User</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" id="custom-tabs-two-nice-tab" data-toggle="pill" href="#custom-tabs-two-nice" role="tab" aria-controls="custom-tabs-two-nice" aria-selected="false">Nice</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" id="custom-tabs-two-sys-tab" data-toggle="pill" href="#custom-tabs-two-sys" role="tab" aria-controls="custom-tabs-two-sys" aria-selected="false">System</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" id="custom-tabs-two-idle-tab" data-toggle="pill" href="#custom-tabs-two-idle" role="tab" aria-controls="custom-tabs-two-idle" aria-selected="false">Idle</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" id="custom-tabs-two-iow-tab" data-toggle="pill" href="#custom-tabs-two-iow" role="tab" aria-controls="custom-tabs-two-iow" aria-selected="false">Iowait</a>
+                  </li>
+                </ul>
+              </div>
+              <div class="card-body">
+                <div class="tab-content" id="custom-tabs-two-tabContent">
+                  <div class="tab-pane fade show active" id="custom-tabs-two-user" role="tabpanel" aria-labelledby="custom-tabs-two-user-tab">
+                    <div id="user_plot" style="height: 300px;"></div>
+                  </div>
+                  <div class="tab-pane fade" id="custom-tabs-two-nice" role="tabpanel" aria-labelledby="custom-tabs-two-nice-tab">
+                    <div id="nice_plot" style="height: 300px;"></div>
+                  </div>
+                  <div class="tab-pane fade" id="custom-tabs-two-sys" role="tabpanel" aria-labelledby="custom-tabs-two-sys-tab">
+                    <div id="system_plot" style="height: 300px;"></div>
+                  </div>
+                  <div class="tab-pane fade" id="custom-tabs-two-idle" role="tabpanel" aria-labelledby="custom-tabs-two-idle-tab">
+                    <div id="idle_plot" style="height: 300px;"></div>
+                  </div>
+                  <div class="tab-pane fade" id="custom-tabs-two-iow" role="tabpanel" aria-labelledby="custom-tabs-two-iow-tab">
+                    <div id="iowait_plot" style="height: 300px;"></div>
                   </div>
                 </div>
               </div>
@@ -301,89 +348,172 @@
 <script src="../../plugins/flot-old/jquery.flot.pie.min.js"></script>
 <!-- Page script -->
 <script>
-  $(function () {
-    /*
-     * Flot Interactive Chart
-     * -----------------------
-     */
-    var data        = [],
-        totalPoints = 100,
-        opt         = {
-              grid: {
-                borderColor: '#f3f3f3',
-                borderWidth: 1,
-                tickColor: '#f3f3f3'
-              },
-              series: {
-                color: '#3c8dbc',
-                lines: {
-                  lineWidth: 2,
-                  show: true,
-                  fill: true,
-                },
-              },
-              yaxis: {
-                show: true,
-              },
-              xaxis: {
-                show: false,
-              }
-            }
 
-    function getRandomData() {
-
-      if (data.length > 0) {
-        data = data.slice(1)
-      }
-
-      // Do a random walk
-      while (data.length < totalPoints) {
-
-        var prev = data.length > 0 ? data[data.length - 1] : 50,
-            y    = prev + Math.random() * 10 - 5
-
-        if (y < 0) {
-          y = 0
-        } //else if (y > 100) {
-          //y = 100
-        //}
-
-        data.push(y)
-      }
-
-      // Zip the generated y values with the x values
-      var res = []
-      for (var i = 0; i < data.length; ++i) {
-        res.push([i, data[i]])
-      }
-
-      return res
+  let totalPoints = 100,
+   memData     = (function (totalPoints) {
+    let res = [];
+    for (let i = 0; i < totalPoints; ++i) {
+      res.push({
+        "Frmkb": 0,
+        "Bufkb": 0,
+        "Camkb": 0,
+        "Tlmkb": 0,
+        "Acmkb": 0,
+        "Iamkb": 0,
+        "Slmkb": 0,
+        "Frskb": 0,
+        "Tlskb": 0,
+        "Caskb": 0,
+        "Comkb": 0
+      })
     }
-
-    var interactive_plot = $.plot('#interactive2', [
-        {
-          data: getRandomData(),
+    return res
+  })(totalPoints),
+      cpuData     = (function (totalPoints) {
+        let res = [];
+        for (let i = 0; i < totalPoints; ++i) {
+          res.push({
+            "CpuUser": 0,
+            "CpuNice": 0,
+            "CpuSys": 0,
+            "CpuIdle": 0,
+            "CpuIowait": 0,
+            "CpuSteal": 0,
+            "CpuHardirq": 0,
+            "CpuSoftirq": 0,
+            "CpuGuest": 0
+          })
         }
-      ],
-      opt
-    )
+        return res
+      })(totalPoints),
 
-    var updateInterval = 30 //Fetch data ever x milliseconds
-    function update() {
-      interactive_plot.setData([getRandomData()])
-      interactive_plot.setupGrid(opt)
-      interactive_plot.draw()
+      opt         = {
+            grid: {
+              borderColor: '#f3f3f3',
+              borderWidth: 1,
+              tickColor: '#f3f3f3'
+            },
+            series: {
+              color: '#3c8dbc',
+              lines: {
+                lineWidth: 2,
+                show: true,
+                fill: true,
+              },
+            },
+            yaxis: {
+              show: true,
+            },
+            xaxis: {
+              show: false,
+            }
+          },
+   memfree_plot = $.plot('#memfree_plot',[{}],opt)
+   swapfree_plot = $.plot('#swapfree_plot',[{}],opt)
+   cached_plot = $.plot('#cached_plot',[{}],opt)
+   swapcached_plot = $.plot('#swapcached_plot',[{}],opt)
 
-      setTimeout(update, updateInterval)
+  user_plot = $.plot('#user_plot',[{}],opt)
+  nice_plot = $.plot('#nice_plot',[{}],opt)
+  system_plot = $.plot('#system_plot',[{}],opt)
+  idle_plot = $.plot('#idle_plot',[{}],opt)
+  iowait_plot = $.plot('#iowait_plot',[{}],opt)
+
+
+  function updateMem(data) {
+    if (memData.length >= totalPoints) {
+      memData = memData.slice(1)
     }
 
-    update()
+    if(memData.length < totalPoints)memData.push(data)
 
-    /*
-     * END INTERACTIVE CHART
-     */
+    if(memData.length < totalPoints)return
 
-  })
+    let res = {MemFree:[],SwapFree:[],Cached:[],SwapCached:[]}
+    for (let i = 0; i < memData.length; ++i) {
+      res.MemFree.push([i, memData[i].Frmkb])
+      res.SwapFree.push([i, memData[i].Frskb])
+      res.Cached.push([i, memData[i].Comkb])
+      res.SwapCached.push([i, memData[i].Caskb])
+    }
+
+    return res
+  }
+
+  function updateCpu(data) {
+    if (cpuData.length >= totalPoints) {
+      cpuData = cpuData.slice(1)
+    }
+
+    if(cpuData.length < totalPoints)cpuData.push(data)
+
+    if(cpuData.length < totalPoints)return
+
+    let res = {User:[],Nice:[],System:[],Idle:[],Iowait:[]}
+    for (let i = 0; i < cpuData.length; ++i) {
+      res.User.push([i, cpuData[i].CpuUser])
+      res.Nice.push([i, cpuData[i].CpuNice])
+      res.System.push([i, cpuData[i].CpuSys])
+      res.Idle.push([i, cpuData[i].CpuIdle])
+      res.Iowait.push([i, cpuData[i].CpuIowait])
+    }
+
+    return res
+  }
+
+  function drawMem(res) {
+    memfree_plot.setData([res.MemFree])
+    memfree_plot.setupGrid(opt)
+    memfree_plot.draw()
+
+    swapfree_plot.setData([res.SwapFree])
+    swapfree_plot.setupGrid(opt)
+    swapfree_plot.draw()
+
+    cached_plot.setData([res.Cached])
+    cached_plot.setupGrid(opt)
+    cached_plot.draw()
+
+    swapcached_plot.setData([res.SwapCached])
+    swapcached_plot.setupGrid(opt)
+    swapcached_plot.draw()
+  }
+
+  function drawCpu(res) {
+    user_plot.setData([res.User])
+    user_plot.setupGrid(opt)
+    user_plot.draw()
+
+    nice_plot.setData([res.Nice])
+    nice_plot.setupGrid(opt)
+    nice_plot.draw()
+
+    system_plot.setData([res.System])
+    system_plot.setupGrid(opt)
+    system_plot.draw()
+
+    idle_plot.setData([res.Idle])
+    idle_plot.setupGrid(opt)
+    idle_plot.draw()
+
+    iowait_plot.setData([res.Iowait])
+    iowait_plot.setupGrid(opt)
+    iowait_plot.draw()
+  }
+
+  function update(data) {
+    let json = JSON.parse(data);
+    switch (json.Type) {
+      case "mem":
+       let memRes = updateMem(json.Module)
+        if(memRes != undefined)drawMem(memRes)
+        break
+      case "cpu":
+        let cpuRes = updateCpu(json.Module)
+        if(cpuRes != undefined)drawCpu(cpuRes)
+        break
+    }
+  }
 
   var sock = null;
   //服务器的地址
@@ -401,7 +531,8 @@
     sock.onmessage = function(e) {
       //服务器发送通知
       //开始处理
-      console.log("message received: " + e.data);
+      //console.log("message received: " + e.data);
+      update(e.data)
     }
   };
 
