@@ -306,6 +306,47 @@
             </div>
           </div>
         </div>
+
+        <div class="row">
+          <div class="col-12">
+            <div class="card card-primary card-tabs">
+              <div class="card-header p-0 pt-1">
+                <ul class="nav nav-tabs" id="custom-tabs-two-tab" role="tablist">
+                  <li class="pt-2 px-3"><h3 class="card-title">nginx</h3></li>
+                  <li class="nav-item">
+                    <a class="nav-link active" id="custom-tabs-two-active-tab" data-toggle="pill" href="#custom-tabs-two-active" role="tab" aria-controls="custom-tabs-two-active" aria-selected="true">Active</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" id="custom-tabs-two-accepts-tab" data-toggle="pill" href="#custom-tabs-two-accepts" role="tab" aria-controls="custom-tabs-two-accepts" aria-selected="false">Accepts</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" id="custom-tabs-two-handled-tab" data-toggle="pill" href="#custom-tabs-two-handled" role="tab" aria-controls="custom-tabs-two-handled" aria-selected="false">Handled</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" id="custom-tabs-two-requests-tab" data-toggle="pill" href="#custom-tabs-two-requests" role="tab" aria-controls="custom-tabs-two-requests" aria-selected="false">Requests</a>
+                  </li>
+                </ul>
+              </div>
+              <div class="card-body">
+                <div class="tab-content" id="custom-tabs-two-tabContent">
+                  <div class="tab-pane fade show active" id="custom-tabs-two-active" role="tabpanel" aria-labelledby="custom-tabs-two-active-tab">
+                    <div id="active_plot" style="height: 300px;"></div>
+                  </div>
+                  <div class="tab-pane fade" id="custom-tabs-two-accepts" role="tabpanel" aria-labelledby="custom-tabs-two-accepts-tab">
+                    <div id="accepts_plot" style="height: 300px;"></div>
+                  </div>
+                  <div class="tab-pane fade" id="custom-tabs-two-handled" role="tabpanel" aria-labelledby="custom-tabs-two-handled-tab">
+                    <div id="handled_plot" style="height: 300px;"></div>
+                  </div>
+                  <div class="tab-pane fade" id="custom-tabs-two-requests" role="tabpanel" aria-labelledby="custom-tabs-two-requests-tab">
+                    <div id="requests_plot" style="height: 300px;"></div>
+                  </div>
+                </div>
+              </div>
+              <!-- /.card -->
+            </div>
+          </div>
+        </div>
         <!-- /.row -->
       </div><!-- /.container-fluid -->
     </section>
@@ -386,6 +427,29 @@
         }
         return res
       })(totalPoints),
+          nginxData     = (function (totalPoints) {
+            let res = [];
+            for (let i = 0; i < totalPoints; ++i) {
+              res.push({
+                "Naccept": 0,
+                "Nhandled": 0,
+                "Nrequest": 0,
+                "Nactive": 0,
+                "Nreading": 0,
+                "Nwriting": 0,
+                "Nwaiting": 0,
+                "Nrstime": 0,
+                "Nspdy": 0,
+                "Nsslhds": 0,
+                "Nssl": 0,
+                "Nsslk": 0,
+                "Nsslf": 0,
+                "Nsslv3f": 0,
+                "Nhttp2": 0,
+              })
+            }
+            return res
+          })(totalPoints),
 
       opt         = {
             grid: {
@@ -418,6 +482,11 @@
   system_plot = $.plot('#system_plot',[{}],opt)
   idle_plot = $.plot('#idle_plot',[{}],opt)
   iowait_plot = $.plot('#iowait_plot',[{}],opt)
+
+  active_plot = $.plot('#active_plot',[{}],opt)
+  accepts_plot = $.plot('#accepts_plot',[{}],opt)
+  handled_plot = $.plot('#handled_plot',[{}],opt)
+  requests_plot = $.plot('#requests_plot',[{}],opt)
 
 
   function updateMem(data) {
@@ -456,6 +525,26 @@
       res.System.push([i, cpuData[i].CpuSys])
       res.Idle.push([i, cpuData[i].CpuIdle])
       res.Iowait.push([i, cpuData[i].CpuIowait])
+    }
+
+    return res
+  }
+
+  function updateNginx(data) {
+    if (nginxData.length >= totalPoints) {
+      nginxData = nginxData.slice(1)
+    }
+
+    if(nginxData.length < totalPoints)nginxData.push(data)
+
+    if(nginxData.length < totalPoints)return
+
+    let res = {Active:[],Accepts:[],Handled:[],Requests:[]}
+    for (let i = 0; i < nginxData.length; ++i) {
+      res.Active.push([i, nginxData[i].Nactive])
+      res.Accepts.push([i, nginxData[i].Naccept])
+      res.Handled.push([i, nginxData[i].Nhandled])
+      res.Requests.push([i, nginxData[i].Nrequest])
     }
 
     return res
@@ -501,6 +590,24 @@
     iowait_plot.draw()
   }
 
+  function drawNginx(res) {
+    active_plot.setData([res.Active])
+    active_plot.setupGrid(opt)
+    active_plot.draw()
+
+    accepts_plot.setData([res.Accepts])
+    accepts_plot.setupGrid(opt)
+    accepts_plot.draw()
+
+    handled_plot.setData([res.Handled])
+    handled_plot.setupGrid(opt)
+    handled_plot.draw()
+
+    requests_plot.setData([res.Requests])
+    requests_plot.setupGrid(opt)
+    requests_plot.draw()
+  }
+
   function update(data) {
     let json = JSON.parse(data);
     switch (json.Type) {
@@ -511,6 +618,11 @@
       case "cpu":
         let cpuRes = updateCpu(json.Module)
         if(cpuRes != undefined)drawCpu(cpuRes)
+        break
+      case "nginx":
+        //console.log("ffffffffff")
+        let nginxRes = updateNginx(json.Module)
+        if(nginxRes != undefined)drawNginx(nginxRes)
         break
     }
   }

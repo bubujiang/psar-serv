@@ -54,10 +54,6 @@ func (s *server) _start() {
 			log.Fatalf("listen: %s\n", err)
 		}
 	}()
-
-	//r.GET("/gdata",GData)
-	//r.GET("/pdata",PData)
-	//r.Run(s.Ip+":"+strconv.FormatUint(s.Port,10))
 }
 
 func (s *server) stop() {
