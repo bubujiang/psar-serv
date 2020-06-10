@@ -9,7 +9,6 @@ import (
 
 func main() {
 	pserver := &server{}
-	//go watch(pserver)
 	pserver.run(getConf())
 	watch(pserver)
 }

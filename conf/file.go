@@ -2,9 +2,7 @@ package conf
 
 import (
 	"flag"
-	"fmt"
 	"gopkg.in/ini.v1"
-	"os"
 )
 
 type FileConf struct {
@@ -17,16 +15,16 @@ func (f *FileConf)Get() *Config {
 
 	cfg, err := ini.Load(*path)
 	if err != nil {
-		//todo 错误处理
-		fmt.Printf("Fail to read file: %v", err)
-		os.Exit(1)
+		panic(err)
 	}
 
 	pc := &Config{}
-	//cfg.Section("").KeysHash()
 	pc.Ip = cfg.Section("server").Key("ip").String()
 	pc.Hosts = cfg.Section("host").KeysHash()
-	pc.Port,_ = cfg.Section("server").Key("port").Uint64()
+	pc.Port,err = cfg.Section("server").Key("port").Uint64()
+	if err != nil {
+		panic(err)
+	}
 
 	return pc
 }

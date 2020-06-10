@@ -3,7 +3,6 @@ package main
 import (
 	"context"
 	"github.com/gin-gonic/gin"
-	"log"
 	"net/http"
 	"psar/serv/conf"
 	"strconv"
@@ -51,7 +50,8 @@ func (s *server) _start() {
 	// it won't block the graceful shutdown handling below
 	go func() {
 		if err := s.wserv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
-			log.Fatalf("listen: %s\n", err)
+			panic(err)
+			//log.Fatalf("listen: %s\n", err)
 		}
 	}()
 }
@@ -60,10 +60,11 @@ func (s *server) stop() {
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 	if err := s.wserv.Shutdown(ctx); err != nil {
-		log.Fatal("Server forced to shutdown:", err)
+		panic(err)
+		//log.Fatal("Server forced to shutdown:", err)
 	}
 
-	log.Println("Server exiting")
+	//log.Println("Server exiting")
 }
 
 func (s *server) load() {
